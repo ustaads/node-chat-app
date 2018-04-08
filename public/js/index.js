@@ -11,9 +11,19 @@ socket.emit('createMessage', {
     text: 'Hey'  
 });
 
-socket.on('newMessage', function(message) {
-    console.log('New Message',message);
+
+socket.on('joinMessage', function(message) {
+    console.log('Greetings ',message);
 });
+
+socket.on('newUserMessage',(message)=>{
+    console.log(message);
+});
+
+
+// socket.on('newMessage', function(message) {
+//     console.log('New Message',message);
+// });
 
 socket.on('disconnect', function (){
     console.log(`Disconnected from Server`);
