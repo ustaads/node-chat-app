@@ -24,6 +24,11 @@ app.use(express.static(publicPath));
 
         socket.on('createMessage',(message) =>{
             console.log('Message',message);
+            io.emit('newMessage',{
+                from: message.from,
+                text: message.text,
+                createdAt: new Date().getTime()
+            });
         });
 
         socket.on('disconnect',()=>{
