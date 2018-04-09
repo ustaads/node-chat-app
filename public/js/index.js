@@ -1,30 +1,37 @@
 var socket = io();
-        
-socket.on('connect', function (){
+
+socket.on('connect', function () {
     console.log(`Connected to server`);
 });
 
 
+socket.on('joinMessage', function (message) {
+    console.log('Greetings ', message);
+});
 
-socket.emit('createMessage', {
-    to: 'jen@example',
-    text: 'Hey'  
+socket.on('newUserMessage', (message) => {
+    console.log('From New Message',message);
+
+    var li = jQuery('<li></li>');
+    li.text(`${message.from}: ${message.text}`);
+    jQuery('#messages').append(li);
 });
 
 
-socket.on('joinMessage', function(message) {
-    console.log('Greetings ',message);
-});
-
-socket.on('newUserMessage',(message)=>{
-    console.log(message);
-});
 
 
-// socket.on('newMessage', function(message) {
-//     console.log('New Message',message);
-// });
-
-socket.on('disconnect', function (){
+socket.on('disconnect', function () {
     console.log(`Disconnected from Server`);
+});
+
+jQuery('#message-form').on('submit',function(e){
+    e.preventDefault();
+    
+    socket.emit('createMessage',{
+        from: 'User',
+        text: jQuery('[name=message]').val()
+    },function(acknowlegdement){
+        console.log(acknowlegdement);
+    });
+
 });
