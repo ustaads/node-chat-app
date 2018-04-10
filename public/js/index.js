@@ -14,17 +14,17 @@ socket.on('joinMessage', function (message) {
 
 socket.on('newUserMessage', (message) => {
     console.log('From New Message',message);
-
+    let formattedTime = moment(message.createdAt).format('hh:mm a');
     var li = jQuery('<li></li>');
-    li.text(`${message.from}: ${message.text}`);
+    li.text(`${message.from} ${formattedTime}: ${message.text} `);
     jQuery('#messages').append(li);
 });
 
 socket.on('newMessage', (message) => {
     console.log('From New Message',message);
-
+    let formattedTime = moment(message.createdAt).format('hh:mm a');
     var li = jQuery('<li></li>');
-    li.text(`${message.from}: ${message.text}`);
+    li.text(`${message.from} ${formattedTime}: ${message.text} `);
     jQuery('#messages').append(li);
 });
 
@@ -59,7 +59,7 @@ locationButton.on('click', function(){
 
     navigator.geolocation.getCurrentPosition(function(position){
         socket.emit('createLocationMessage',{
-            latitude: position.coords.latitude,
+            latitude: position.coords.latitude,     
             longitude: position.coords.longitude
         });
         locationButton.removeAttr('disabled').text('Send Location');
@@ -72,10 +72,11 @@ locationButton.on('click', function(){
 socket.on('newLocationMessage',function(message){
     console.log('From New Location Message',message);
 
+    let formattedTime = moment(message.createdAt).format('hh:mm a');
     var li = jQuery('<li></li>');
     var a = jQuery('<a target="_blank" >My Current Location</a>');
     a.attr('href',message.url);
-    li.text(`${message.from}: `);
+    li.text(`${message.from} ${formattedTime}:`);
     li.append(a);
     jQuery('#messages').append(li);
 });
