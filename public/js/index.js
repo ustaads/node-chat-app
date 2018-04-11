@@ -21,11 +21,17 @@ socket.on('newUserMessage', (message) => {
 });
 
 socket.on('newMessage', (message) => {
-    console.log('From New Message',message);
+
     let formattedTime = moment(message.createdAt).format('hh:mm a');
-    var li = jQuery('<li></li>');
-    li.text(`${message.from} ${formattedTime}: ${message.text} `);
-    jQuery('#messages').append(li);
+    let template = jQuery("#message-template").html();
+    let html = Mustache.render(template,{
+        text: message.text,
+        from: message.from,
+        createdAt: formattedTime
+    });
+
+    jQuery("#messages").append(html);
+    
 });
 
 
@@ -73,10 +79,12 @@ socket.on('newLocationMessage',function(message){
     console.log('From New Location Message',message);
 
     let formattedTime = moment(message.createdAt).format('hh:mm a');
-    var li = jQuery('<li></li>');
-    var a = jQuery('<a target="_blank" >My Current Location</a>');
-    a.attr('href',message.url);
-    li.text(`${message.from} ${formattedTime}:`);
-    li.append(a);
-    jQuery('#messages').append(li);
+    let template = jQuery("#location-message-template").html();
+    console.log(template);
+    let html = Mustache.render(template,{
+        url: message.url,
+        createdAt: formattedTime,
+        from: message.from
+    });
+    jQuery("#messages").append(html);
 });

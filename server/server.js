@@ -11,20 +11,20 @@ var server = http.createServer(app);
 var io = socketIO(server);
 
 app.use(express.static(publicPath));
-    io.on('connection', (socket) => {
+
+io.on('connection', (socket) => {
         console.log(`New User Connected `);
 
-        socket.emit('joinMessage',generateMessage('Admin','Welcome to the Chat App'));
+        socket.emit('newMessage',generateMessage('Admin','Welcome to the Chat App'));
 
 
-        socket.broadcast.emit('newUserMessage',generateMessage('Admin','New User Joined'));
+        socket.broadcast.emit('newNewMessage',generateMessage('Admin','New User Joined'));
 
         socket.on('createMessage',(message,callback) =>{
             console.log('Message',message);
              io.emit('newMessage',generateMessage(message.from,  message.text));
             
-        // socket.emit('newUserMessage',generateMessage(message.from,  message.text));
-
+  
             callback('This is from the Server.');
            
         });
@@ -40,9 +40,7 @@ app.use(express.static(publicPath));
 
         });
 
-        // socket.on('createLocationMessage',(coords)=>{
-        //     io.emit('newMessage',generateMessage('Admin',`${coords.latitude},${coords.longitude}`));
-        // });
+    
     });
 
 
