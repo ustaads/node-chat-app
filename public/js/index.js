@@ -12,13 +12,13 @@ socket.on('joinMessage', function (message) {
     jQuery('#messages').append(li);
 });
 
-socket.on('newUserMessage', (message) => {
-    console.log('From New Message',message);
-    let formattedTime = moment(message.createdAt).format('hh:mm a');
-    var li = jQuery('<li></li>');
-    li.text(`${message.from} ${formattedTime}: ${message.text} `);
-    jQuery('#messages').append(li);
-});
+// socket.on('newMessage', (message) => {
+//     console.log('From New Message',message);
+//     let formattedTime = moment(message.createdAt).format('hh:mm a');
+//     var li = jQuery('<li></li>');
+//     li.text(`${message.from} ${formattedTime}: ${message.text} `);
+//     jQuery('#messages').append(li);
+// });
 
 socket.on('newMessage', (message) => {
 
