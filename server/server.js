@@ -47,7 +47,10 @@ io.on('connection', (socket) => {
         });
 
         socket.on('createLocationMessage',(message)=>{
-            io.emit('newLocationMessage',generateLocationMessage('Admin',message.latitude, message.longitude));
+            console.log(message.from,message.latitude, message.longitude);
+            let user = users.getUser(socket.id);
+            console.log(user[0].room);
+            io.to(user[0].room).emit('newLocationMessage',generateLocationMessage(message.from,message.latitude, message.longitude));
         });
         socket.on('disconnect',()=>{
             console.log(`Client Disconnected`);

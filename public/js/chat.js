@@ -104,6 +104,7 @@ jQuery('#message-form').on('submit', function (e) {
 var locationButton = jQuery('#send-location');
 
 locationButton.on('click', function () {
+    let params = jQuery.deparam(window.location.search);
     console.log('On Click');
     if (!navigator.geolocation) {
         return alert('Geolocation not supported by your browser');
@@ -113,6 +114,7 @@ locationButton.on('click', function () {
 
     navigator.geolocation.getCurrentPosition(function (position) {
         socket.emit('createLocationMessage', {
+            from: params.name,
             latitude: position.coords.latitude,
             longitude: position.coords.longitude
         });
