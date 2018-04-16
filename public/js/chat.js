@@ -73,7 +73,7 @@ socket.on('newMessage', (message) => {
 });
 
 socket.on('updateUserList',function(users){
-    s
+    
 
     var ol = jQuery('<ol></ol>');
     users.forEach(function(user){
