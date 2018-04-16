@@ -12,26 +12,26 @@ function scrollToBottom() {
     let newMessageHeight = newMessage.innerHeight();
     let lastMessageHeight = newMessage.prev().innerHeight();
 
-    console.log(clientHeight, scrollHeight, scrollTop);
+  
     if (clientHeight + scrollTop + newMessageHeight + lastMessageHeight >= scrollHeight) {
 
         messages.scrollTop(scrollHeight);
-        console.log('Inside If', clientHeight, scrollHeight, scrollTop, newMessageHeight, lastMessageHeight);
+        
     }
 }
 socket.on('connect', function () {
-    console.log(`Connected to server`);
+   
     let params = jQuery.deparam(window.location.search);
 
 
     socket.emit('join', params, function (err) {
-        console.log(`Connected to server`, params);
+        
         if (err) {
-            console.log(err, 'Inside IF error');
+           
             alert(err);
             window.location.href = '/';
         } else {
-            console.log('No error');
+            
         }
     });
 
@@ -40,7 +40,7 @@ socket.on('connect', function () {
 
 
 socket.on('joinMessage', function (message) {
-    console.log('Greetings ', message);
+   
     var li = jQuery('<li></li>');
     li.text(`${message.from}: ${message.text}`);
     jQuery('#messages').append(li);
@@ -58,7 +58,7 @@ socket.on('joinMessage', function (message) {
 
 socket.on('newMessage', (message) => {
 
-    console.log(message,'from new Message');
+    
     let formattedTime = moment(message.createdAt).format('hh:mm a');
     let template = jQuery("#message-template").html();
     let html = Mustache.render(template, {
@@ -73,7 +73,7 @@ socket.on('newMessage', (message) => {
 });
 
 socket.on('updateUserList',function(users){
-    console.log('Users form update user list ',users);
+    s
 
     var ol = jQuery('<ol></ol>');
     users.forEach(function(user){
@@ -95,7 +95,7 @@ jQuery('#message-form').on('submit', function (e) {
         from: params.name,
         text: messageBoxText.val()
     }, function (acknowlegdement) {
-        console.log(acknowlegdement);
+        // console.log(acknowlegdement);
         messageBoxText.val('');
     });
 
@@ -105,7 +105,7 @@ var locationButton = jQuery('#send-location');
 
 locationButton.on('click', function () {
     let params = jQuery.deparam(window.location.search);
-    console.log('On Click');
+    // console.log('On Click');
     if (!navigator.geolocation) {
         return alert('Geolocation not supported by your browser');
     }
@@ -126,11 +126,11 @@ locationButton.on('click', function () {
 });
 
 socket.on('newLocationMessage', function (message) {
-    console.log('From New Location Message', message);
+    
 
     let formattedTime = moment(message.createdAt).format('hh:mm a');
     let template = jQuery("#location-message-template").html();
-    console.log(template);
+ 
     let html = Mustache.render(template, {
         url: message.url,
         createdAt: formattedTime,
